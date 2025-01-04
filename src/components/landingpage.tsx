@@ -3,14 +3,14 @@
 import { useState, useEffect } from "react";
 
 export default function LandingPage() {
-  const [videoSource, setVideoSource] = useState("/video/comp 1.webm");
+  const [videoSource, setVideoSource] = useState("/video/Comp1.webm");
 
   useEffect(() => {
     const handleResize = () => {
       if (window.matchMedia("(max-width: 768px)").matches) {
-        setVideoSource("/video/comp 4.webm"); // Video pro mobil
+        setVideoSource("/video/Comp4.webm"); // Video pro mobil
       } else {
-        setVideoSource("/video/comp 1.webm"); // Video pro desktop/tablety
+        setVideoSource("/video/Comp1.webm"); // Video pro desktop/tablety
       }
     };
 
