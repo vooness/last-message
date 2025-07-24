@@ -1,0 +1,99 @@
+// prisma/schema.prisma
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id                Int         @id @default(autoincrement())
+  firstName         String?
+  lastName          String?
+  email             String      @unique
+  password          String
+  birthDate         DateTime?
+  phone             String?
+
+  street            String?
+  houseNumber       String?
+  orientationNumber String?
+  city              String?
+  postalCode        String?
+
+  createdAt         DateTime    @default(now())
+
+  accounts          Account[]
+  sessions          Session[]
+
+  recipients        Recipient[]   // místo categories
+  messages          Message[]
+}
+
+model Account {
+  id                Int      @id @default(autoincrement())
+  userId            Int
+  providerType      String
+  providerId        String
+  providerAccountId String
+  refresh_token     String?  @db.Text
+  access_token      String?  @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?  @db.Text
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Session {
+  id           Int      @id @default(autoincrement())
+  sessionToken String   @unique
+  userId       Int
+  expires      DateTime
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+/// Příjemci (neboli „to whom") místo kategorie
+model Recipient {
+  id        Int       @id @default(autoincrement())
+  name      String
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    Int
+  messages  Message[]
+  createdAt DateTime  @default(now())
+}
+
+/// Textové a video-vzkazy uživatele
+model Message {
+  id           Int          @id @default(autoincrement())
+  type         MessageType
+  text         String?      // textový vzkaz
+  videoUrl     String?      // S3 URL k video-vzkazu
+
+  recipient    Recipient?   @relation(fields: [recipientId], references: [id], onDelete: SetNull)
+  recipientId  Int?
+
+  user         User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId       Int
+
+  createdAt    DateTime     @default(now())
+}
+
+enum MessageType {
+  TEXT
+  VIDEO
+}

@@ -1,0 +1,178 @@
+/* sidebar.module.css */
+:root {
+  --sidebar-width: 16rem;
+  --sidebar-bg: #1f2937;
+  --sidebar-text: #f9fafb;
+  --accent: #FF6F6D;
+  --hover-bg: rgba(255,255,255,0.1);
+  --transition: 0.25s ease-in-out;
+}
+
+/* Sidebar základní */
+.sidebar {
+  position: fixed;
+  top: 0; 
+  left: 0;
+  height: 100vh;
+  width: var(--sidebar-width);
+  background: var(--sidebar-bg);
+  color: var(--sidebar-text);
+  transform: translateX(-100%);
+  transition: transform var(--transition);
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 2px 0 8px rgba(0,0,0,0.3);
+}
+
+.sidebar.open {
+  transform: translateX(0);
+}
+
+/* Toggle tlačítko */
+.toggleButton {
+  position: fixed;
+  top: 50%;
+  left: 0.5rem;
+  transform: translateY(-50%);
+  background: var(--accent);
+  color: #fff;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 9999px;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+  cursor: pointer;
+  z-index: 1001;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  transition: background 0.2s;
+}
+
+.toggleButton:hover {
+  background: #ff8f8d;
+}
+
+/* Záhlaví uvnitř */
+.header {
+  flex-shrink: 0;
+  padding: 1rem;
+  background: var(--accent);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.header h2 {
+  margin: 0;
+  color: #fff;
+  font-size: 1.125rem;
+  font-weight: 600;
+}
+
+/* Menu kontejner */
+.menu {
+  flex: 1;
+  margin-top: 0.5rem;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  padding: 0.5rem 0;
+}
+
+/* Menu položky */
+.item {
+  margin: 0.125rem 0;
+}
+
+.link,
+.button {
+  display: flex;
+  align-items: center;
+  padding: 0.75rem 1rem;
+  text-decoration: none;
+  color: inherit;
+  background: none;
+  border: none;
+  width: 100%;
+  text-align: left;
+  cursor: pointer;
+  transition: background 0.2s;
+  font-size: 0.875rem;
+}
+
+.link:hover,
+.button:hover {
+  background: var(--hover-bg);
+}
+
+.link svg,
+.button svg {
+  width: 1.25rem;
+  height: 1.25rem;
+  margin-right: 0.75rem;
+  flex-shrink: 0;
+}
+
+/* Arrow pro submenu */
+.arrow {
+  margin-left: auto;
+  transition: transform 0.2s;
+  font-size: 0.75rem;
+  opacity: 0.7;
+}
+
+/* Submenu */
+.submenu {
+  background: rgba(0,0,0,0.2);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-left: 2px solid var(--accent);
+}
+
+.submenuItem {
+  margin: 0;
+}
+
+.submenuLink {
+  display: block;
+  padding: 0.5rem 1rem 0.5rem 3rem;
+  text-decoration: none;
+  color: inherit;
+  font-size: 0.8rem;
+  transition: background 0.2s;
+  opacity: 0.9;
+}
+
+.submenuLink:hover {
+  background: var(--hover-bg);
+  opacity: 1;
+}
+
+/* Overlay pro mobile */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0,0,0,0.5);
+  z-index: 999;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .sidebar {
+    width: 100%;
+    max-width: var(--sidebar-width);
+  }
+  
+  .toggleButton {
+    left: 1rem;
+    top: 1rem;
+    transform: none;
+    position: fixed;
+  }
+}
