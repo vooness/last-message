@@ -1,11 +1,11 @@
 /* sidebar.module.css */
-:root {
+:global(:root) {
   --sidebar-width: 16rem;
-  --sidebar-bg: #1f2937;
-  --sidebar-text: #f9fafb;
-  --accent: #FF6F6D;
-  --hover-bg: rgba(255,255,255,0.1);
-  --transition: 0.25s ease-in-out;
+  --sidebar-bg:    #1f2937;
+  --sidebar-text:  #f9fafb;
+  --accent:        #FF6F6D;
+  --hover-bg:      rgba(255,255,255,0.1);
+  --transition:    0.25s ease-in-out;
 }
 
 /* Sidebar základní */
